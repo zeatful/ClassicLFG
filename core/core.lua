@@ -17,6 +17,10 @@ function QueueForInstance()
     -- need to send out a communication    
 end
 
+function CheckAppropriateLevelCheckBox()
+    return appropriateLevelCheckbox:GetValue()
+end
+
 -- Return a list of filtered instances for the dropdown, only the instance key and name
 function SetInstancesForDropDown(table)
     local filteredInstances = {}
@@ -36,10 +40,6 @@ function SetInstancesForDropDown(table)
 
     -- return a list of instances filtered by player level, containing only the instance key and name
     return filteredInstances
-end
-
-function CheckAppropriateLevelCheckBox()
-    return appropriateLevelCheckbox:GetValue()
 end
 
 --------------------

@@ -5,6 +5,12 @@ local AceGUI = LibStub("AceGUI-3.0")
 local AceComm = LibStub("AceComm-3.0")
 
 --------------------
+--  Global Variables
+--------------------
+-- to sort list properly from low instances to high instances
+local instancesSortList = {}
+
+--------------------
 --  Functions
 --------------------
 local function QueueForInstance()
@@ -14,7 +20,7 @@ local function QueueForInstance()
 end
 
 -- Return a list of filtered instances for the dropdown, only the instance key and name
-local function SetInstancesForDropDown(table, instanceDropDown)
+local function SetInstancesForDropDown(table)
     local filteredInstances = {}
     local playerLevel = UnitLevel("player") -- grab player level
 
@@ -78,13 +84,10 @@ local instances = {
     ["SCHOLO"] = { name = "Scholomance", minLevel = 58, maxLevel = 60}
 }
 
--- to sort list properly from low instances to high instances
-local instancesSortList = {}
-
 -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
 local instanceDropDown = AceGUI:Create("Dropdown")
 instanceDropDown:SetText("Select Instance")
-instanceDropDown:SetList(SetInstancesForDropDown(instances, instanceDropDown), instancesSortList)
+instanceDropDown:SetList(SetInstancesForDropDown(instances), instancesSortList)
 frame:AddChild(instanceDropDown)
 
 -- Button to join the queue

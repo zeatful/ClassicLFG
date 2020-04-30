@@ -85,7 +85,7 @@ parentFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 parentFrame:SetLayout("List")
 
 appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")
-appropriateLevelCheckbox:SetCallback("OnMouseUp", function(widget) SetInstancesForDropDown() end)
+appropriateLevelCheckbox:SetCallback("OnValueChanged", SetInstancesForDropDown())
 parentFrame:AddChild(appropriateLevelCheckbox)
 
 -- Role DropDown - Tank, Healer, Dps

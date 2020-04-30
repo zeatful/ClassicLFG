@@ -44,7 +44,7 @@ local frame = AceGUI:Create("Frame")
 frame:SetTitle("Classic LFG")
 frame:SetStatusText("Classic LFG Queue Screen")
 frame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
-frame:SetLayout("Flow")
+frame:SetLayout("List")
 
 local appropriateLevelCheckbox = AceGUI:Create("CheckBox")
 appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")

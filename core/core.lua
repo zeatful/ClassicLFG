@@ -7,22 +7,23 @@ local AceComm = LibStub("AceComm-3.0")
 --------------------
 --  Global Variables
 --------------------
+local appropriateLevelCheckbox
 
 --------------------
 --  Functions
 --------------------
-function QueueForInstance()
+local function QueueForInstance()
     -- disable queue button
     -- grab selected instance and role
     -- need to send out a communication    
 end
 
-function CheckAppropriateLevelCheckBox()
+local function CheckAppropriateLevelCheckBox()
     return appropriateLevelCheckbox:GetValue()
 end
 
 -- Return a list of filtered instances for the dropdown, only the instance key and name
-function SetInstancesForDropDown(table)
+local function SetInstancesForDropDown(table)
     local filteredInstances = {}
     local playerLevel = UnitLevel("player") -- grab player level
 
@@ -52,7 +53,7 @@ frame:SetStatusText("Classic LFG Queue Screen")
 frame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 frame:SetLayout("List")
 
-local appropriateLevelCheckbox = AceGUI:Create("CheckBox")
+appropriateLevelCheckbox = AceGUI:Create("CheckBox")
 appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")
 frame:AddChild(appropriateLevelCheckbox)
 

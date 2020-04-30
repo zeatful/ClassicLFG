@@ -46,6 +46,10 @@ frame:SetStatusText("Classic LFG Queue Screen")
 frame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 frame:SetLayout("Flow")
 
+local appropriateLevelCheckbox = AceGUI:Create("Checkbox")
+appropriateLevelCheckbox:SetText("Only show appropriate instances based on level:")
+frame.AddChild(appropriateLevelCheckbox)
+
 -- table of roles
 local roles = {}
 roles[0] = "Tank"

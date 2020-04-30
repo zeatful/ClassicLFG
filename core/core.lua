@@ -11,14 +11,14 @@ local AceComm = LibStub("AceComm-3.0")
 --------------------
 --  Functions
 --------------------
-local function QueueForInstance()
+function QueueForInstance()
     -- disable queue button
     -- grab selected instance and role
     -- need to send out a communication    
 end
 
 -- Return a list of filtered instances for the dropdown, only the instance key and name
-local function SetInstancesForDropDown(table)
+function SetInstancesForDropDown(table)
     local filteredInstances = {}
     local playerLevel = UnitLevel("player") -- grab player level
 
@@ -28,12 +28,18 @@ local function SetInstancesForDropDown(table)
     for k in pairs(table) do        
         instance = table[k];
         if(playerLevel >= instance.minLevel) then
-            filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
+            if((not CheckAppropriateLevelCheckBox()) and (playerLevel <= instance.maxLevel)) then
+                filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
+            end
         end
     end
 
     -- return a list of instances filtered by player level, containing only the instance key and name
     return filteredInstances
+end
+
+function CheckAppropriateLevelCheckBox()
+    return appropriateLevelCheckbox:GetValue()
 end
 
 --------------------

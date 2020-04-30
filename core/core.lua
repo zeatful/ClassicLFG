@@ -20,10 +20,12 @@ local function SetInstancesForDropDown(table, instanceDropDown)
 
     -- for each instance, check if it is appropriate for the player based on min / max level, if so add it to the list
     local instance = {}
+    local i = 0
     for k in pairs(table) do        
         instance = table[k];
         if(playerLevel >= instance.minLevel) then
-            filteredInstances[k] = instance.name
+            instancesSortList[i+1] = k -- track sorting
+            filteredInstances[k] = instance.name .. "(" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
         end
     end
 
@@ -77,8 +79,7 @@ local instances = {
 }
 
 -- to sort list properly from low instances to high instances
-local instancesSortList = {"RFC", "WC", "VC", "SFK", "BFD", "STOCK", "GNOME", 
-    "RFK", "SM", "RFD", "ULD", "ZF", "MARA", "ST", "BRD", "LBRS", "DM", "STRAT", "SCHOLO"}
+local instancesSortList = {}
 
 -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
 local instanceDropDown = AceGUI:Create("Dropdown")

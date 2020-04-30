@@ -7,8 +7,6 @@ local AceComm = LibStub("AceComm-3.0")
 --------------------
 --  Global Variables
 --------------------
--- to sort list properly from low instances to high instances
-local instancesSortList = {}
 
 --------------------
 --  Functions
@@ -30,7 +28,6 @@ local function SetInstancesForDropDown(table)
     for k in pairs(table) do        
         instance = table[k];
         if(playerLevel >= instance.minLevel) then
-            instancesSortList[i+1] = k -- track sorting
             filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
         end
     end
@@ -88,8 +85,7 @@ local instances = {
 local instanceDropDown = AceGUI:Create("Dropdown")
 instanceDropDown:SetText("Select Instance")
 local sortedInstances = SetInstancesForDropDown(instances)
-print(instancesSortList)
-instanceDropDown:SetList(sortedInstances, instancesSortList)
+instanceDropDown:SetList(sortedInstances)
 frame:AddChild(instanceDropDown)
 
 -- Button to join the queue

@@ -18,7 +18,7 @@ roles["H"] = "Healer"
 roles["D"] = "Dps"
 
 -- Role DropDown - Tank, Healer, Dps
-local roleDropDown = AceGUI:Create("DropDown")
+local roleDropDown = AceGUI:Create("Dropdown")
 roleDropDown:SetText("Select Role")
 roleDropDown:SetList(roles)
 frame:AddChild(roleDropDown)

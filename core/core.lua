@@ -22,7 +22,7 @@ local function SetInstancesForDropDown(table, instanceDropDown)
     local instance = {}
     for k in pairs(table) do        
         instance = table[k];
-        if( playerLevel <= instance.maxLevel and playerLevel >= instance.minLevel) then
+        if(playerLevel >= instance.minLevel) then
             filteredInstances[k] = instance.name
         end
     end

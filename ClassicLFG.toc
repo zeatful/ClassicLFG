@@ -1,5 +1,5 @@
 ## Interface: 11304
-## Title: LFG (Looking for Group)
+## Title: ClassicLFG
 ## Notes: An addon to easily queue for an instance based on role (Tank, Healer, Dps)
 ## Author: zeatful
 ## Version: 1.0
@@ -7,4 +7,4 @@
 ## OptionalDeps: LibStub, CallbackHandler-1.0, AceAddon-3.0, AceEvent-3.0, AceTimer-3.0, AceBucket-3.0, AceGUI-3.0, AceConfig-3.0, AceComm-3.0, AceSerializer-3.0, LibSharedMedia-3.0, AceGUI-3.0-SharedMediaWidgets
 ## X-Embeds: LibStub, CallbackHandler-1.0, Ace3, LibSharedMedia-3.0, AceGUI-3.0-SharedMediaWidgets
 
-lfg.xml
+ClassicLFG.xml

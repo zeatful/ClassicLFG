@@ -16,6 +16,7 @@
     <Include file="lib\LibSharedMedia-3.0\lib.xml"/>
     <Include file="lib\AceGUI-3.0-SharedMediaWidgets\widget.xml"/>
 
-
     <!-- Core -->
+    <!-- <Script file="core\config.lua"/> -->
+    <Script file="core\core.lua"/>
 </Ui>

@@ -23,16 +23,16 @@ local function CheckAppropriateLevelCheckBox()
     return appropriateLevelCheckbox:GetValue()
 end
 
--- Return a list of filtered instances for the dropdown, only the instance key and name
-local function SetInstancesForDropDown(table)
+-- set instance dropdown to a list of filtered instances
+local function SetInstancesForDropDown()
     local filteredInstances = {}
     local playerLevel = UnitLevel("player") -- grab player level
 
     -- for each instance, check if it is appropriate for the player based on min / max level, if so add it to the list
     local instance = {}
     local i = 0
-    for k in pairs(table) do        
-        instance = table[k];
+    for k in pairs(instances) do        
+        instance = instances[k];
         if(playerLevel >= instance.minLevel) then
             if((not CheckAppropriateLevelCheckBox()) and (playerLevel <= instance.maxLevel)) then
                 filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
@@ -40,8 +40,7 @@ local function SetInstancesForDropDown(table)
         end
     end
 
-    -- return a list of instances filtered by player level, containing only the instance key and name
-    return filteredInstances
+    instanceDropDown:SetList(filteredInstances)
 end
 
 --------------------
@@ -56,6 +55,7 @@ parentFrame:SetLayout("List")
 
 appropriateLevelCheckbox = AceGUI:Create("CheckBox")
 appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")
+appropriateLevelCheckbox:SetCallback("OnMouseUp", SetInstancesForDropDown())
 parentFrame:AddChild(appropriateLevelCheckbox)
 
 -- table of roles
@@ -95,7 +95,6 @@ instances[18] = { name = "Scholomance", minLevel = 58, maxLevel = 60}
 -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
 instanceDropDown = AceGUI:Create("Dropdown")
 instanceDropDown:SetText("Select Instance")
-instanceDropDown:SetList(SetInstancesForDropDown(instances))
 parentFrame:AddChild(instanceDropDown)
 
 -- Button to join the queue

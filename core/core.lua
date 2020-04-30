@@ -66,8 +66,9 @@ local function SetInstancesForDropDown()
         instance = instances[k];
         if(playerLevel >= instance.minLevel) then
             -- if((CheckAppropriateLevelCheckBox()) and (playerLevel <= instance.maxLevel)) then
+            if(CheckAppropriateLevelCheckBox()) then
                 filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
-            -- end
+            end
         end
     end
 
@@ -84,7 +85,7 @@ parentFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 parentFrame:SetLayout("List")
 
 appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")
-appropriateLevelCheckbox:SetCallback("OnMouseUp", SetInstancesForDropDown())
+appropriateLevelCheckbox:SetCallback("OnMouseUp", function(widget) SetInstancesForDropDown() end)
 parentFrame:AddChild(appropriateLevelCheckbox)
 
 -- Role DropDown - Tank, Healer, Dps

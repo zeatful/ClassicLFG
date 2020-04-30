@@ -7,7 +7,11 @@ local AceComm = LibStub("AceComm-3.0")
 --------------------
 --  Global Variables
 --------------------
-local parentFrame, appropriateLevelCheckbox, roleDropDown, instanceDropDown, queueButton
+local parentFrame = AceGUI:Create("Frame")
+local appropriateLevelCheckbox = AceGUI:Create("CheckBox")
+local roleDropDown = AceGUI:Create("Dropdown")
+local instanceDropDown = AceGUI:Create("Dropdown")
+local queueButton = AceGUI:Create("Button")
 
 -- table of roles
 local roles = {}
@@ -74,30 +78,25 @@ end
 -- UI Definition
 --------------------
 -- Addon parent frame
-parentFrame = AceGUI:Create("Frame")
 parentFrame:SetTitle("Classic LFG")
 parentFrame:SetStatusText("Classic LFG Queue Screen")
 parentFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 parentFrame:SetLayout("List")
 
-appropriateLevelCheckbox = AceGUI:Create("CheckBox")
 appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")
 appropriateLevelCheckbox:SetCallback("OnMouseUp", SetInstancesForDropDown())
 parentFrame:AddChild(appropriateLevelCheckbox)
 
 -- Role DropDown - Tank, Healer, Dps
-roleDropDown = AceGUI:Create("Dropdown")
 roleDropDown:SetText("Select Role")
 roleDropDown:SetList(roles)
 parentFrame:AddChild(roleDropDown)
 
 -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
-instanceDropDown = AceGUI:Create("Dropdown")
 instanceDropDown:SetText("Select Instance")
 parentFrame:AddChild(instanceDropDown)
 
 -- Button to join the queue
-queueButton = AceGUI:Create("Button")
 queueButton:SetText("Queue")
 queueButton:SetWidth(200)
 parentFrame:AddChild(queueButton)

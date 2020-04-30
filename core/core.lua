@@ -31,7 +31,7 @@ local function SetInstancesForDropDown(table)
         instance = table[k];
         if(playerLevel >= instance.minLevel) then
             instancesSortList[i+1] = k -- track sorting
-            filteredInstances[k] = instance.name .. "(" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
+            filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
         end
     end
 
@@ -87,7 +87,8 @@ local instances = {
 -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
 local instanceDropDown = AceGUI:Create("Dropdown")
 instanceDropDown:SetText("Select Instance")
-instanceDropDown:SetList(SetInstancesForDropDown(instances), instancesSortList)
+local sortedInstances = SetInstancesForDropDown(instances)
+instanceDropDown:SetList(sortedInstances, instancesSortList)
 frame:AddChild(instanceDropDown)
 
 -- Button to join the queue

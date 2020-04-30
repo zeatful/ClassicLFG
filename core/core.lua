@@ -1,9 +1,39 @@
 --------------------
---  UI Setup
+--  Declare Libraries
 --------------------
 local AceGUI = LibStub("AceGUI-3.0")
 local AceComm = LibStub("AceComm-3.0")
 
+--------------------
+--  Functions
+--------------------
+local function QueueForInstance()
+    -- disable queue button
+    -- grab selected instance and role
+    -- need to send out a communication    
+end
+
+-- Return a list of filtered instances for the dropdown, only the instance key and name
+local function SetInstancesForDropDown(table, instanceDropDown)
+    local filteredInstances = {}
+    local playerLevel = UnitLevel("player") -- grab player level
+
+    -- for each instance, check if it is appropriate for the player based on min / max level, if so add it to the list
+    local instance = {}
+    for k in pairs(table) do        
+        instance = table[k];
+        if( playerLevel <= instance.maxLevel and playerLevel >= instance.minLevel) then
+            filteredInstances[k] = instance.name
+        end
+    end
+
+    -- return a list of instances filtered by player level, containing only the instance key and name
+    return filteredInstances
+end
+
+--------------------
+-- UI Definition
+--------------------
 -- Addon parent frame
 local frame = AceGUI:Create("Frame")
 frame:SetTitle("Classic LFG")
@@ -58,30 +88,3 @@ queueButton:SetText("Queue")
 queueButton:SetWidth(200)
 frame:SetStatusText("OnClick", QueueForInstance())
 frame:AddChild(queueButton)
-
---------------------
---  Functions
---------------------
-local function QueueForInstance()
-    -- disable queue button
-    -- grab selected instance and role
-    -- need to send out a communication    
-end
-
--- Return a list of filtered instances for the dropdown, only the instance key and name
-local function SetInstancesForDropDown(table, instanceDropDown)
-    local filteredInstances = {}
-    local playerLevel = UnitLevel("player") -- grab player level
-
-    -- for each instance, check if it is appropriate for the player based on min / max level, if so add it to the list
-    local instance = {}
-    for k in pairs(table) do        
-        instance = table["k"];
-        if( playerLevel <= instance.maxLevel and playerLevel >= instance.minLevel) then
-            filteredInstances["k"] = instance.name
-        end
-    end
-
-    -- return a list of instances filtered by player level, containing only the instance key and name
-    return filteredInstances
-end

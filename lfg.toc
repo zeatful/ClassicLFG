@@ -1,4 +1,4 @@
-## Interface: 11302
+## Interface: 11304
 ## Title: LFG (Looking for Group)
 ## Notes: An addon to easily queue for an instance based on role (Tank, Healer, Dps)
 ## Author: zeatful

@@ -76,10 +76,14 @@ local instances = {
     ["SCHOLO"] = { name = "Scholomance", minLevel = 58, maxLevel = 60}
 }
 
+-- to sort list properly from low instances to high instances
+local instancesSortList = {"RFC", "WC", "VC", "SFK", "BFD", "STOCK", "GNOME", 
+    "RFK", "SM", "RFD", "ULD", "ZF", "MARA", "ST", "BRD", "LBRS", "DM", "STRAT", "SCHOLO"}
+
 -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
 local instanceDropDown = AceGUI:Create("Dropdown")
 instanceDropDown:SetText("Select Instance")
-instanceDropDown:SetList(SetInstancesForDropDown(instances, instanceDropDown))
+instanceDropDown:SetList(SetInstancesForDropDown(instances, instanceDropDown), instancesSortList)
 frame:AddChild(instanceDropDown)
 
 -- Button to join the queue

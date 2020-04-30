@@ -47,7 +47,7 @@ frame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 frame:SetLayout("Flow")
 
 local appropriateLevelCheckbox = AceGUI:Create("CheckBox")
-appropriateLevelCheckbox:SetText("Only show appropriate instances based on level:")
+appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")
 frame.AddChild(appropriateLevelCheckbox)
 
 -- table of roles

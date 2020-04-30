@@ -16,4 +16,5 @@
     - Individual - prepopulate role based on class, simply place in queue
     - Group - must be party leader, ask what remaining roles needed are
 1. Remove instance max level cap
-1. Add ability to auto invite those who meet queue needs
+1. Ability to auto invite those who meet queue needs
+1. Ability to blacklist players

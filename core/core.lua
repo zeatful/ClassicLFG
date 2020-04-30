@@ -47,7 +47,7 @@ local instances = {
 }
 
 -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
-local instanceDropDown = AceGUI:Create("DropDown")
+local instanceDropDown = AceGUI:Create("Dropdown")
 instanceDropDown:SetText("Select Instance")
 instanceDropDown:SetList(SetInstancesForDropDown(instances, instanceDropDown))
 frame:AddChild(instanceDropDown)

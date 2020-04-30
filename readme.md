@@ -18,3 +18,5 @@
 1. Remove instance max level cap
 1. Ability to auto invite those who meet queue needs
 1. Ability to blacklist players
+1. Add checkbox to list appropriate instances based on min/max level (IE: don't run lower level instances)
+1. Properly sort instances list based on minimum level

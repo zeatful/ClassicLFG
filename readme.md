@@ -5,7 +5,7 @@
  - Dps
  - Healer
  - Tank
-1. Select Instance
+2. Select Instance
  - will be prepopulated based on minimum and maximum levels
 
 ## Future Features

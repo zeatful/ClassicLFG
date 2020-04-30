@@ -20,7 +20,7 @@ roles["D"] = "Dps"
 -- Role DropDown - Tank, Healer, Dps
 local roleDropDown = AceGUI:Create("DropDown")
 roleDropDown:SetText("Select Role")
-roleDropDown.SetList(roles)
+roleDropDown:SetList(roles)
 frame:AddChild(roleDropDown)
 
 -- table of instances : key, name, minimum level and maximum level

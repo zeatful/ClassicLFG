@@ -46,7 +46,7 @@ frame:SetStatusText("Classic LFG Queue Screen")
 frame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 frame:SetLayout("Flow")
 
-local appropriateLevelCheckbox = AceGUI:Create("Checkbox")
+local appropriateLevelCheckbox = AceGUI:Create("CheckBox")
 appropriateLevelCheckbox:SetText("Only show appropriate instances based on level:")
 frame.AddChild(appropriateLevelCheckbox)
 

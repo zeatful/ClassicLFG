@@ -12,7 +12,7 @@ frame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
 frame:SetLayout("Flow")
 
 -- table of roles
-local roles = {};
+local roles = {}
 roles[T] = "Tank"
 roles[H] = "Healer"
 roles[D] = "Dps"

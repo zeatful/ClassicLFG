@@ -7,7 +7,8 @@ local AceComm = LibStub("AceComm-3.0")
 --------------------
 --  Global Variables
 --------------------
-local appropriateLevelCheckbox
+local parentFrame, appropriateLevelCheckbox, roleDropDown, instanceDropDown, queueButton
+local roles, instances
 
 --------------------
 --  Functions
@@ -47,30 +48,30 @@ end
 -- UI Definition
 --------------------
 -- Addon parent frame
-local frame = AceGUI:Create("Frame")
-frame:SetTitle("Classic LFG")
-frame:SetStatusText("Classic LFG Queue Screen")
-frame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
-frame:SetLayout("List")
+parentFrame = AceGUI:Create("Frame")
+parentFrame:SetTitle("Classic LFG")
+parentFrame:SetStatusText("Classic LFG Queue Screen")
+parentFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
+parentFrame:SetLayout("List")
 
 appropriateLevelCheckbox = AceGUI:Create("CheckBox")
 appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")
-frame:AddChild(appropriateLevelCheckbox)
+parentFrame:AddChild(appropriateLevelCheckbox)
 
 -- table of roles
-local roles = {}
+roles = {}
 roles[0] = "Tank"
 roles[1] = "Healer"
 roles[2] = "Dps"
 
 -- Role DropDown - Tank, Healer, Dps
-local roleDropDown = AceGUI:Create("Dropdown")
+roleDropDown = AceGUI:Create("Dropdown")
 roleDropDown:SetText("Select Role")
 roleDropDown:SetList(roles)
-frame:AddChild(roleDropDown)
+parentFrame:AddChild(roleDropDown)
 
 -- table of instances : key, name, minimum level and maximum level
-local instances = {}
+instances = {}
 instances[0] = { name = "Ragefire Chasm", minLevel = 13, maxLevel = 18}
 instances[1] = { name = "Wailing Caverns", minLevel = 17, maxLevel = 24}
 instances[2] = { name = "The Deadmines", minLevel = 17, maxLevel = 26}
@@ -92,15 +93,13 @@ instances[17] = { name = "Stratholme", minLevel = 58, maxLevel = 60}
 instances[18] = { name = "Scholomance", minLevel = 58, maxLevel = 60}
 
 -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
-local instanceDropDown = AceGUI:Create("Dropdown")
+instanceDropDown = AceGUI:Create("Dropdown")
 instanceDropDown:SetText("Select Instance")
-local sortedInstances = SetInstancesForDropDown(instances)
-instanceDropDown:SetList(sortedInstances)
-frame:AddChild(instanceDropDown)
+instanceDropDown:SetList(SetInstancesForDropDown(instances))
+parentFrame:AddChild(instanceDropDown)
 
 -- Button to join the queue
-local queueButton = AceGUI:Create("Button")
+queueButton = AceGUI:Create("Button")
 queueButton:SetText("Queue")
 queueButton:SetWidth(200)
-frame:SetStatusText("OnClick", QueueForInstance())
-frame:AddChild(queueButton)
+parentFrame:AddChild(queueButton)

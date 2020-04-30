@@ -88,6 +88,7 @@ local instances = {
 local instanceDropDown = AceGUI:Create("Dropdown")
 instanceDropDown:SetText("Select Instance")
 local sortedInstances = SetInstancesForDropDown(instances)
+print(instancesSortList)
 instanceDropDown:SetList(sortedInstances, instancesSortList)
 frame:AddChild(instanceDropDown)
 

@@ -89,7 +89,7 @@ function ClassicLFG:SetInstancesForDropDown(dropdown)
             self:Print("Instance --> " .. instance.name)
             self:Print("--> instance max --> " .. instance.maxLevel)
             self:Print("--> not checkAppropriateLevel --> " .. tostring(checkAppropriateLevel))
-            self:Print("--> playerLessThanMax --> " .. playerLessThanMax)
+            self:Print("--> playerLessThanMax --> " .. tostring(playerLessThanMax))
             if(not checkAppropriateLevel and playerLessThanMax) then
                 filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
             end

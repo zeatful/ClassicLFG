@@ -66,7 +66,7 @@ local function SetInstancesForDropDown()
         instance = instances[k];
         if(playerLevel >= instance.minLevel) then
             -- if((CheckAppropriateLevelCheckBox()) and (playerLevel <= instance.maxLevel)) then
-            if(CheckAppropriateLevelCheckBox()) then
+            if(not CheckAppropriateLevelCheckBox() and (playerLevel <= instance.maxLevel)) then
                 filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
             end
         end

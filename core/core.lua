@@ -48,25 +48,35 @@ local function QueueForInstance()
     -- disable queue button
     -- grab selected instance and role
     -- need to send out a communication    
+    self:Print("Queue for instance pressed!")
 end
 
 local function CheckAppropriateLevelCheckBox()
+    self:Print("appropriateLevelCheckbox value changed!")
     return appropriateLevelCheckbox:GetValue()
 end
 
 -- set instance dropdown to a list of filtered instances
 local function SetInstancesForDropDown()
+    self:Print("SetInstancesForDropDown invoked!")
     local filteredInstances = {}
     local playerLevel = UnitLevel("player") -- grab player level
+    self:Print("PlayerLevel --> " .. playerLevel)
 
     -- for each instance, check if it is appropriate for the player based on min / max level, if so add it to the list
     local instance = {}
     local i = 0
+    local checkAppropriateLevel = CheckAppropriateLevelCheckBox()
+    local playerLessThanMax = false
     for k in pairs(instances) do        
         instance = instances[k];
+        playerLessThanMax = (playerLevel <= instance.maxLevel)
         if(playerLevel >= instance.minLevel) then
-            -- if((CheckAppropriateLevelCheckBox()) and (playerLevel <= instance.maxLevel)) then
-            if(not CheckAppropriateLevelCheckBox() and (playerLevel <= instance.maxLevel)) then
+            self:Print("Instance --> " .. instance.name)
+            self:Print("--> instance max --> " .. instance.maxLevel)
+            self:Print("--> not checkAppropriateLevel --> " .. (not checkAppropriateLevel))
+            self:Print("--> playerLessThanMax --> " .. playerLessThanMax)
+            if(not checkAppropriateLevel and playerLessThanMax) then
                 filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
             end
         end

@@ -46,6 +46,7 @@ local instanceDropDown = AceGUI:Create("Dropdown")
 local queueButton = AceGUI:Create("Button")
 
 function ClassicLFG:OnInitialize()
+    self:Print("ClassicLFG initializing!")
     -- Called when the addon is loaded
     LibStub("AceConfig-3.0"):RegisterOptionsTable("ClassicLFG", options)
     self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("ClassicLFG", "ClassicLFG")
@@ -53,7 +54,7 @@ function ClassicLFG:OnInitialize()
 end
 
 function ClassicLFG:OnEnable()
-    self:Print("Hello World!")
+    self:Print("ClassicLFG loaded!")
 end
 
 function ClassicLFG:QueueForInstance()
@@ -69,7 +70,7 @@ function ClassicLFG:CheckAppropriateLevelCheckBox()
 end
 
 -- set instance dropdown to a list of filtered instances
-function ClassicLFG:SetInstancesForDropDown()
+function ClassicLFG:SetInstancesForDropDown(dropdown)
     self:Print("SetInstancesForDropDown invoked!")
     local filteredInstances = {}
     local playerLevel = UnitLevel("player") -- grab player level
@@ -78,7 +79,7 @@ function ClassicLFG:SetInstancesForDropDown()
     -- for each instance, check if it is appropriate for the player based on min / max level, if so add it to the list
     local instance = {}
     local i = 0
-    local checkAppropriateLevel = CheckAppropriateLevelCheckBox()
+    local checkAppropriateLevel = self:CheckAppropriateLevelCheckBox()
     local playerLessThanMax = false
     for k in pairs(instances) do        
         instance = instances[k];
@@ -94,10 +95,11 @@ function ClassicLFG:SetInstancesForDropDown()
         end
     end
 
-    instanceDropDown:SetList(filteredInstances)
+    dropdown:SetList(filteredInstances)
 end
 
 function ClassicLFG:DisplayUI()
+    self:Print("ClassicLFG UI displayed!")
     -- Addon parent frame
     local parentFrame = AceGUI:Create("Frame")
     parentFrame:SetTitle("Classic LFG")
@@ -106,7 +108,7 @@ function ClassicLFG:DisplayUI()
     parentFrame:SetLayout("List")
 
     appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")
-    appropriateLevelCheckbox:SetCallback("OnValueChanged", function(value) SetInstancesForDropDown() end)
+    appropriateLevelCheckbox:SetCallback("OnValueChanged", function(value) self:SetInstancesForDropDown(instanceDropDown) end)
     parentFrame:AddChild(appropriateLevelCheckbox)
 
     -- Role DropDown - Tank, Healer, Dps
@@ -122,4 +124,6 @@ function ClassicLFG:DisplayUI()
     queueButton:SetText("Queue")
     queueButton:SetWidth(200)
     parentFrame:AddChild(queueButton)
+
+    self:SetInstancesForDropDown(instanceDropDown)
 end

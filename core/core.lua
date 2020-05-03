@@ -1,17 +1,23 @@
---------------------
---  Declare Libraries
---------------------
-local AceGUI = LibStub("AceGUI-3.0")
-local AceComm = LibStub("AceComm-3.0")
+--  Declare Addon and embed libraries
+ClassicLFG = LibStub("AceAddon-3.0"):NewAddon("ClassicLFG", "AceGUI-3.0", "AceConsole-3.0", "AceEvent-3.0")
 
---------------------
---  Global Variables
---------------------
-local parentFrame = AceGUI:Create("Frame")
-local appropriateLevelCheckbox = AceGUI:Create("CheckBox")
-local roleDropDown = AceGUI:Create("Dropdown")
-local instanceDropDown = AceGUI:Create("Dropdown")
-local queueButton = AceGUI:Create("Button")
+
+-- Setup Options Config Table
+local options = {
+    name = "ClassicLFG",
+    handler = ClassicLFG,
+    type = 'group',
+    args = {
+        msg = {
+            type = "input",
+            name = "Message",
+            desc = "The message to be displayed when you get home.",
+            usage = "<Your message>",
+            get = "GetMessage",
+            set = "SetMessage"
+        }
+    }
+}
 
 -- table of roles
 local roles = {}
@@ -41,23 +47,65 @@ instances[16] = { name = "Dire Maul", minLevel = 55, maxLevel = 60}
 instances[17] = { name = "Stratholme", minLevel = 58, maxLevel = 60}
 instances[18] = { name = "Scholomance", minLevel = 58, maxLevel = 60}
 
---------------------
---  Functions
---------------------
-local function QueueForInstance()
+---- define UI elements ----
+local parentFrame = self:Create("Frame")
+local appropriateLevelCheckbox = self:Create("CheckBox")
+local roleDropDown = self:Create("Dropdown")
+local instanceDropDown = self:Create("Dropdown")
+local queueButton = self:Create("Button")
+
+function ClassicLFG:OnInitialize()
+    -- Called when the addon is loaded
+    LibStub("AceConfig-3.0"):RegisterOptionsTable("ClassicLFG", options)
+    self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("ClassicLFG", "ClassicLFG")
+    self:RegisterChatCommand("lfg", "ChatCommand")
+    ClassicLFG.message = "Classic LFG!"
+end
+
+function ClassicLFG:OnEnable()
+    -- Called when the addon is enabled
+end
+
+function ClassicLFG:OnDisable()
+    -- Called when the addon is disabled
+end
+
+function ClassicLFG:ChatCommand(input)
+    if not input or input:trim() == "" then
+        InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+    else
+        LibStub("AceConfigCmd-3.0"):HandleCommand("wh", "ClassicLFG", input)
+    end
+end
+
+function ClassicLFG:GetMessage(info)
+    return self.message
+end
+
+function ClassicLFG:SetMessage(info, newValue)
+    self.message = newValue
+end
+
+function ClassicLFG:ZONE_CHANGED()
+    if GetBindLocation() == GetSubZoneText() then
+        self:Print(self.message)
+    end
+end
+
+function ClassicLFG:QueueForInstance()
     -- disable queue button
     -- grab selected instance and role
     -- need to send out a communication    
     self:Print("Queue for instance pressed!")
 end
 
-local function CheckAppropriateLevelCheckBox()
+function ClassicLFG:CheckAppropriateLevelCheckBox()
     self:Print("appropriateLevelCheckbox value changed!")
     return appropriateLevelCheckbox:GetValue()
 end
 
 -- set instance dropdown to a list of filtered instances
-local function SetInstancesForDropDown()
+function ClassicLFG:SetInstancesForDropDown()
     self:Print("SetInstancesForDropDown invoked!")
     local filteredInstances = {}
     local playerLevel = UnitLevel("player") -- grab player level
@@ -85,29 +133,28 @@ local function SetInstancesForDropDown()
     instanceDropDown:SetList(filteredInstances)
 end
 
---------------------
--- UI Definition
---------------------
--- Addon parent frame
-parentFrame:SetTitle("Classic LFG")
-parentFrame:SetStatusText("Classic LFG Queue Screen")
-parentFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
-parentFrame:SetLayout("List")
+function ClassicLFG:DisplayUI()
+    -- Addon parent frame
+    parentFrame:SetTitle("Classic LFG")
+    parentFrame:SetStatusText("Classic LFG Queue Screen")
+    parentFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
+    parentFrame:SetLayout("List")
 
-appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")
-appropriateLevelCheckbox:SetCallback("OnValueChanged", function(value) SetInstancesForDropDown() end)
-parentFrame:AddChild(appropriateLevelCheckbox)
+    appropriateLevelCheckbox:SetLabel("Only show appropriate instances based on level:")
+    appropriateLevelCheckbox:SetCallback("OnValueChanged", function(value) SetInstancesForDropDown() end)
+    parentFrame:AddChild(appropriateLevelCheckbox)
 
--- Role DropDown - Tank, Healer, Dps
-roleDropDown:SetText("Select Role")
-roleDropDown:SetList(roles)
-parentFrame:AddChild(roleDropDown)
+    -- Role DropDown - Tank, Healer, Dps
+    roleDropDown:SetText("Select Role")
+    roleDropDown:SetList(roles)
+    parentFrame:AddChild(roleDropDown)
 
--- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
-instanceDropDown:SetText("Select Instance")
-parentFrame:AddChild(instanceDropDown)
+    -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
+    instanceDropDown:SetText("Select Instance")
+    parentFrame:AddChild(instanceDropDown)
 
--- Button to join the queue
-queueButton:SetText("Queue")
-queueButton:SetWidth(200)
-parentFrame:AddChild(queueButton)
+    -- Button to join the queue
+    queueButton:SetText("Queue")
+    queueButton:SetWidth(200)
+    parentFrame:AddChild(queueButton)
+end

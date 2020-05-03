@@ -1,7 +1,4 @@
 <Ui xmlns="http://blizzard.com/wow/ui/">
-    <!-- Init -->
-    <Script file="core\init.lua"/>
-
     <!-- Libraries -->
     <Script file="lib\LibStub\LibStub.lua"/>
     <Script file="lib\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
@@ -17,6 +14,5 @@
     <Include file="lib\AceGUI-3.0-SharedMediaWidgets\widget.xml"/>
 
     <!-- Core -->
-    <!-- <Script file="core\config.lua"/> -->
     <Script file="core\core.lua"/>
 </Ui>

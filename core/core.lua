@@ -52,6 +52,10 @@ function ClassicLFG:OnInitialize()
     self:RegisterChatCommand("lfg", "DisplayUI")
 end
 
+function ClassicLFG:OnEnable()
+    self:Print("Hello World!")
+end
+
 function ClassicLFG:QueueForInstance()
     -- disable queue button
     -- grab selected instance and role

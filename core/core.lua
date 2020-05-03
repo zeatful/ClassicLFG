@@ -12,8 +12,7 @@ local options = {
 }
 
 local playerLevel = UnitLevel("player") -- grab player level
-local playerClassIndex = UnitClass("player") -- grab player class
-local playerClass = "None"
+local playerClass = UnitClass("player") -- grab player class
 local isTank = false
 local isHealer = false
 
@@ -22,22 +21,6 @@ local roles = {}
 roles[0] = "Tank"
 roles[1] = "Healer"
 roles[2] = "Dps"
-
--- class index reference from UnitClass
-local classes = {}
-classes[0] = "None"
-classes[1] = "Warrior"
-classes[2] = "Paladin"
-classes[3] = "Hunter"
-classes[4] = "Rogue"
-classes[5] = "Priest"
-classes[6] = "DeathKnight"
-classes[7] = "Shaman"
-classes[8] = "Mage"
-classes[9] = "Warlock"
-classes[10] = "Monk"
-classes[11] = "Druid"
-classes[12] = "Demon Hunter"
 
 -- table of classes eligible to tank
 local tankClasses = {}
@@ -94,15 +77,11 @@ end
 
 function ClassicLFG:OnEnable()
     self:Print("ClassicLFG loaded!")
-
-    -- get player class
-    playerClass = classes[playerClassIndex]
     
     -- determine if tank or healer possible
     isTank = self:Contains(tankClasses, playerClass)
     isHealer = self:Contains(healClasses, playerClass)
 
-    self:Print("Player Class Index --> " .. tostring(playerClassIndex))
     self:Print("Player Class --> " .. tostring(playerClass))
     self:Print("Can Tank? --> " .. tostring(isTank))
     self:Print("Can Heal? --> " .. tostring(isHealer))

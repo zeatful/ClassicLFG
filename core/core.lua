@@ -102,7 +102,8 @@ function ClassicLFG:OnEnable()
     isTank = self:Contains(tankClasses, playerClass)
     isHealer = self:Contains(healClasses, playerClass)
 
-    self:Print("Player Class --> " .. playerClass)
+    self:Print("Player Class Index --> " .. tostring(playerClassIndex))
+    self:Print("Player Class --> " .. tostring(playerClass))
     self:Print("Can Tank? --> " .. tostring(isTank))
     self:Print("Can Heal? --> " .. tostring(isHealer))
 end

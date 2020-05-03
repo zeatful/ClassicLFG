@@ -7,15 +7,7 @@ local options = {
     name = "ClassicLFG",
     handler = ClassicLFG,
     type = 'group',
-    args = {
-        msg = {
-            type = "input",
-            name = "Message",
-            desc = "The message to be displayed when you get home.",
-            usage = "<Your message>",
-            get = "GetMessage",
-            set = "SetMessage"
-        }
+    args = {        
     }
 }
 
@@ -57,38 +49,7 @@ function ClassicLFG:OnInitialize()
     -- Called when the addon is loaded
     LibStub("AceConfig-3.0"):RegisterOptionsTable("ClassicLFG", options)
     self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("ClassicLFG", "ClassicLFG")
-    self:RegisterChatCommand("lfg", "ChatCommand")
-    ClassicLFG.message = "Classic LFG!"
-end
-
-function ClassicLFG:OnEnable()
-    -- Called when the addon is enabled
-end
-
-function ClassicLFG:OnDisable()
-    -- Called when the addon is disabled
-end
-
-function ClassicLFG:ChatCommand(input)
-    if not input or input:trim() == "" then
-        InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
-    else
-        LibStub("AceConfigCmd-3.0"):HandleCommand("wh", "ClassicLFG", input)
-    end
-end
-
-function ClassicLFG:GetMessage(info)
-    return self.message
-end
-
-function ClassicLFG:SetMessage(info, newValue)
-    self.message = newValue
-end
-
-function ClassicLFG:ZONE_CHANGED()
-    if GetBindLocation() == GetSubZoneText() then
-        self:Print(self.message)
-    end
+    self:RegisterChatCommand("lfg", "DisplayUI")
 end
 
 function ClassicLFG:QueueForInstance()

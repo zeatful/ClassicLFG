@@ -66,7 +66,7 @@ end
 
 function ClassicLFG:CheckAppropriateLevelCheckBox()
     local checkedValue = appropriateLevelCheckbox:GetValue()
-    self:Print("appropriateLevelCheckbox value changed --> " .. checkedValue)
+    self:Print("appropriateLevelCheckbox value changed --> " .. tostring(checkedValue))
     return checkedValue
 end
 
@@ -88,7 +88,7 @@ function ClassicLFG:SetInstancesForDropDown(dropdown)
         if(playerLevel >= instance.minLevel) then
             self:Print("Instance --> " .. instance.name)
             self:Print("--> instance max --> " .. instance.maxLevel)
-            -- self:Print("--> not checkAppropriateLevel --> " .. checkAppropriateLevel)
+            self:Print("--> not checkAppropriateLevel --> " .. tostring(checkAppropriateLevel))
             self:Print("--> playerLessThanMax --> " .. playerLessThanMax)
             if(not checkAppropriateLevel and playerLessThanMax) then
                 filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"

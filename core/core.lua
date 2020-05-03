@@ -48,7 +48,6 @@ instances[17] = { name = "Stratholme", minLevel = 58, maxLevel = 60}
 instances[18] = { name = "Scholomance", minLevel = 58, maxLevel = 60}
 
 ---- define UI elements ----
-local parentFrame = AceGUI:Create("Frame")
 local appropriateLevelCheckbox = AceGUI:Create("CheckBox")
 local roleDropDown = AceGUI:Create("Dropdown")
 local instanceDropDown = AceGUI:Create("Dropdown")
@@ -135,6 +134,7 @@ end
 
 function ClassicLFG:DisplayUI()
     -- Addon parent frame
+    local parentFrame = AceGUI:Create("Frame")
     parentFrame:SetTitle("Classic LFG")
     parentFrame:SetStatusText("Classic LFG Queue Screen")
     parentFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)

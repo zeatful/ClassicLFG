@@ -1,6 +1,6 @@
 --  Declare Addon and embed libraries
-ClassicLFG = LibStub("AceAddon-3.0"):NewAddon("ClassicLFG", "AceGUI-3.0", "AceConsole-3.0", "AceEvent-3.0")
-
+ClassicLFG = LibStub("AceAddon-3.0"):NewAddon("ClassicLFG", "AceConsole-3.0", "AceEvent-3.0")
+local AceGUI = LibStub("AceGUI-3.0")
 
 -- Setup Options Config Table
 local options = {
@@ -48,11 +48,11 @@ instances[17] = { name = "Stratholme", minLevel = 58, maxLevel = 60}
 instances[18] = { name = "Scholomance", minLevel = 58, maxLevel = 60}
 
 ---- define UI elements ----
-local parentFrame = self:Create("Frame")
-local appropriateLevelCheckbox = self:Create("CheckBox")
-local roleDropDown = self:Create("Dropdown")
-local instanceDropDown = self:Create("Dropdown")
-local queueButton = self:Create("Button")
+local parentFrame = AceGUI:Create("Frame")
+local appropriateLevelCheckbox = AceGUI:Create("CheckBox")
+local roleDropDown = AceGUI:Create("Dropdown")
+local instanceDropDown = AceGUI:Create("Dropdown")
+local queueButton = AceGUI:Create("Button")
 
 function ClassicLFG:OnInitialize()
     -- Called when the addon is loaded

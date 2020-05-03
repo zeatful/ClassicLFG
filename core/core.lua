@@ -11,11 +11,46 @@ local options = {
     }
 }
 
+local playerLevel = UnitLevel("player") -- grab player level
+local playerClassIndex = UnitClass("player") -- grab player class
+local playerClass = "None"
+local isTank = false
+local isHealer = false
+
 -- table of roles
 local roles = {}
 roles[0] = "Tank"
 roles[1] = "Healer"
 roles[2] = "Dps"
+
+-- class index reference from UnitClass
+local classes = {}
+classes[0] = "None"
+classes[1] = "Warrior"
+classes[2] = "Paladin"
+classes[3] = "Hunter"
+classes[4] = "Rogue"
+classes[5] = "Priest"
+classes[6] = "DeathKnight"
+classes[7] = "Shaman"
+classes[8] = "Mage"
+classes[9] = "Warlock"
+classes[10] = "Monk"
+classes[11] = "Druid"
+classes[12] = "Demon Hunter"
+
+-- table of classes eligible to tank
+local tankClasses = {}
+tankClasses["Warrior"] = "Warrior"
+tankClasses["Paladin"]= "Paladin"
+tankClasses["Druid"] = "Druid"
+
+-- table of classes eligible to healer
+local healClasses = {}
+healClasses["Priest"] = "Priest"
+healClasses["Paladin"] = "Priest"
+healClasses["Druid"] = "Druid"
+healClasses["Shaman"] = "Shaman"
 
 -- table of instances : key, name, minimum level and maximum level
 local instances = {}
@@ -45,6 +80,10 @@ local roleDropDown = AceGUI:Create("Dropdown")
 local instanceDropDown = AceGUI:Create("Dropdown")
 local queueButton = AceGUI:Create("Button")
 
+function ClassicLFG:Contains(set, key)
+    return set[key] ~= nil
+end
+
 function ClassicLFG:OnInitialize()
     self:Print("ClassicLFG initializing!")
     -- Called when the addon is loaded
@@ -55,6 +94,16 @@ end
 
 function ClassicLFG:OnEnable()
     self:Print("ClassicLFG loaded!")
+
+    -- get player class
+    playerClass = classes[playerClassIndex]
+    
+    -- determine if tank or healer possible
+    isTank = self:Contains(tankClasses, playerClass)
+    isHealer = self:Contains(healClasses, playerClass)
+
+    self:Print("Can Tank? --> " .. tostring(isTank))
+    self:Print("Can Heal? --> " .. tostring(isHealer))
 end
 
 function ClassicLFG:QueueForInstance()
@@ -72,8 +121,7 @@ end
 
 -- set instance dropdown to a list of filtered instances
 function ClassicLFG:SetInstancesForDropDown(dropdown)
-    local filteredInstances = {}
-    local playerLevel = UnitLevel("player") -- grab player level
+    local filteredInstances = {}    
 
     -- for each instance, check if it is appropriate for the player based on min / max level, if so add it to the list
     local instance = {}

@@ -144,7 +144,7 @@ function ClassicLFG:SetInstancesForDropDown(dropdown)
         if(playerGreaterThanMin) then
             if(not checkAppropriateLevel or playerLessThanMax) then
                 filteredInstances[k] = instanceString
-                DebugSetInstancesForDropDown(instanceString, instance, playerGreaterThanMin, playerLessThanMax)
+                self:DebugSetInstancesForDropDown(instanceString, instance, playerGreaterThanMin, playerLessThanMax)
             end
         end
     end

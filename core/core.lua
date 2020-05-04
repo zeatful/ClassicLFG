@@ -71,12 +71,11 @@ function ClassicLFG:Contains(set, key)
 end
 
 function ClassicLFG:OnInitialize()
-    
     -- Called when the addon is loaded
     LibStub("AceConfig-3.0"):RegisterOptionsTable("ClassicLFG", options)
     self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("ClassicLFG", "ClassicLFG")
     self:RegisterChatCommand("lfg", "DisplayUI")
-    self:DebugOnInitialize()
+    -- self:DebugOnInitialize()
 end
 
 -- function ClassicLFG:DebugOnInitialize()

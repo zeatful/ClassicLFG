@@ -1,6 +1,7 @@
 --  Declare Addon and embed libraries
 ClassicLFG = LibStub("AceAddon-3.0"):NewAddon("ClassicLFG", "AceConsole-3.0", "AceEvent-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
+local debugMode = true;
 
 -- Setup Options Config Table
 local options = {
@@ -11,6 +12,7 @@ local options = {
     }
 }
 
+-- Player information for queue: level, class, can class tank, can class heal
 local playerLevel = UnitLevel("player") -- grab player level
 local playerClass = UnitClass("player") -- grab player class
 local isTank = false
@@ -28,7 +30,7 @@ tankClasses["Warrior"] = "Warrior"
 tankClasses["Paladin"]= "Paladin"
 tankClasses["Druid"] = "Druid"
 
--- table of classes eligible to healer
+-- table of classes eligible to heal
 local healClasses = {}
 healClasses["Priest"] = "Priest"
 healClasses["Paladin"] = "Priest"
@@ -63,41 +65,64 @@ local roleDropDown = AceGUI:Create("Dropdown")
 local instanceDropDown = AceGUI:Create("Dropdown")
 local queueButton = AceGUI:Create("Button")
 
+-- helper for table / key lookups
 function ClassicLFG:Contains(set, key)
     return set[key] ~= nil
 end
 
 function ClassicLFG:OnInitialize()
-    self:Print("ClassicLFG initializing!")
+    
     -- Called when the addon is loaded
     LibStub("AceConfig-3.0"):RegisterOptionsTable("ClassicLFG", options)
     self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("ClassicLFG", "ClassicLFG")
     self:RegisterChatCommand("lfg", "DisplayUI")
+    self:DebugOnInitialize()
 end
 
-function ClassicLFG:OnEnable()
-    self:Print("ClassicLFG loaded!")
-    
+function ClassicLFG:DebugOnInitialize()
+    if(debugMode) then
+        self:Print("ClassicLFG initializing!")
+    end
+end
+
+function ClassicLFG:OnEnable()    
     -- determine if tank or healer possible
     isTank = self:Contains(tankClasses, playerClass)
     isHealer = self:Contains(healClasses, playerClass)
+    self:DebugOnEnable()
+end
 
-    self:Print("Player Class --> " .. tostring(playerClass))
-    self:Print("Can Tank? --> " .. tostring(isTank))
-    self:Print("Can Heal? --> " .. tostring(isHealer))
+function ClassicLFG:DebugOnEnable()
+    if(debugMode) then
+        self:Print("PlayerClass: " .. playerClass)
+        self:Print("Can Class Tank? --> " .. tostring(isTank))
+        self:Print("Can Class Heal? --> " .. tostring(isHealer))
+    end
 end
 
 function ClassicLFG:QueueForInstance()
     -- disable queue button
     -- grab selected instance and role
-    -- need to send out a communication    
-    self:Print("Queue for instance pressed!")
+    -- need to send out a communication
+    self:QueueForInstance()
+end
+
+function ClassicLFG:DebugQueueForInstance()
+    if(debugMode) then
+        self:Print("Queue for instance pressed!")
+    end
 end
 
 function ClassicLFG:CheckAppropriateLevelCheckBox()
     local checkedValue = appropriateLevelCheckbox:GetValue()
-    self:Print("appropriateLevelCheckbox value changed --> " .. tostring(checkedValue))
+    self:DebugAppropriateLevelCheckBox(checkedValue)
     return checkedValue
+end
+
+function ClassicLFG:DebugAppropriateLevelCheckBox(checkedValue)
+    if(debugMode) then
+        self:Print("AppropriateLevelCheckbox value changed to --> " .. tostring(checkedValue))
+    end
 end
 
 -- set instance dropdown to a list of filtered instances
@@ -109,17 +134,30 @@ function ClassicLFG:SetInstancesForDropDown(dropdown)
     local i = 0
     local checkAppropriateLevel = self:CheckAppropriateLevelCheckBox()
     local playerLessThanMax = false
+    local playerGreaterThanMin = false
+    local instanceString = ""
     for k in pairs(instances) do        
         instance = instances[k];
         playerLessThanMax = (playerLevel <= instance.maxLevel)
-        if(playerLevel >= instance.minLevel) then
+        playerGreaterThanMin = (playerLevel >= instance.minLevel)
+        instanceString = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
+        if(playerGreaterThanMin) then
             if(not checkAppropriateLevel or playerLessThanMax) then
-                filteredInstances[k] = instance.name .. " (" .. instance.minLevel .. "-" .. instance.maxLevel .. ")"
+                filteredInstances[k] = instanceString
+                DebugSetInstancesForDropDown(instanceString, instance, playerGreaterThanMin, playerLessThanMax)
             end
         end
     end
 
     dropdown:SetList(filteredInstances)
+end
+
+function ClassicLFG:DebugSetInstancesForDropDown(instanceString, instance, playerGreaterThanMin, playerLessThanMax)
+    if(debugMode) then
+        self:Print("Instance --> " .. instanceString)
+        self:Print("PlayerLevel(" .. tostring(playerLevel) .. ") >= InstanceMin(" .. tostring(instance.minLevel) .. ") --> " .. playerGreaterThanMin)
+        self:Print("PlayerLevel(" .. tostring(playerLevel) .. ") <= InstanceMax(" .. tostring(instance.maxLevel) .. ") --> " .. playerLessThanMax)        
+    end
 end
 
 function ClassicLFG:DisplayUI()

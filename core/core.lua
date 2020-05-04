@@ -79,26 +79,26 @@ function ClassicLFG:OnInitialize()
     self:DebugOnInitialize()
 end
 
-function ClassicLFG:DebugOnInitialize()
-    if(debugMode) then
-        self:Print("ClassicLFG initializing!")
-    end
-end
+-- function ClassicLFG:DebugOnInitialize()
+--     if(debugMode) then
+--         self:Print("ClassicLFG initializing!")
+--     end
+-- end
 
 function ClassicLFG:OnEnable()    
     -- determine if tank or healer possible
     isTank = self:Contains(tankClasses, playerClass)
     isHealer = self:Contains(healClasses, playerClass)
-    self:DebugOnEnable()
+    -- self:DebugOnEnable()
 end
 
-function ClassicLFG:DebugOnEnable()
-    if(debugMode) then
-        self:Print("PlayerClass: " .. playerClass)
-        self:Print("Can Class Tank? --> " .. tostring(isTank))
-        self:Print("Can Class Heal? --> " .. tostring(isHealer))
-    end
-end
+-- function ClassicLFG:DebugOnEnable()
+--     if(debugMode) then
+--         self:Print("PlayerClass: " .. playerClass)
+--         self:Print("Can Class Tank? --> " .. tostring(isTank))
+--         self:Print("Can Class Heal? --> " .. tostring(isHealer))
+--     end
+-- end
 
 function ClassicLFG:QueueForInstance()
     -- disable queue button
@@ -107,23 +107,23 @@ function ClassicLFG:QueueForInstance()
     self:QueueForInstance()
 end
 
-function ClassicLFG:DebugQueueForInstance()
-    if(debugMode) then
-        self:Print("Queue for instance pressed!")
-    end
-end
+-- function ClassicLFG:DebugQueueForInstance()
+--     if(debugMode) then
+--         self:Print("Queue for instance pressed!")
+--     end
+-- end
 
 function ClassicLFG:CheckAppropriateLevelCheckBox()
     local checkedValue = appropriateLevelCheckbox:GetValue()
-    self:DebugAppropriateLevelCheckBox(checkedValue)
+    -- self:DebugAppropriateLevelCheckBox(checkedValue)
     return checkedValue
 end
 
-function ClassicLFG:DebugAppropriateLevelCheckBox(checkedValue)
-    if(debugMode) then
-        self:Print("AppropriateLevelCheckbox value changed to --> " .. tostring(checkedValue))
-    end
-end
+-- function ClassicLFG:DebugAppropriateLevelCheckBox(checkedValue)
+--     if(debugMode) then
+--         self:Print("AppropriateLevelCheckbox value changed to --> " .. tostring(checkedValue))
+--     end
+-- end
 
 -- set instance dropdown to a list of filtered instances
 function ClassicLFG:SetInstancesForDropDown(dropdown)
@@ -144,7 +144,7 @@ function ClassicLFG:SetInstancesForDropDown(dropdown)
         if(playerGreaterThanMin) then
             if(not checkAppropriateLevel or playerLessThanMax) then
                 filteredInstances[k] = instanceString
-                self:DebugSetInstancesForDropDown(instanceString, instance, playerGreaterThanMin, playerLessThanMax)
+                -- self:DebugSetInstancesForDropDown(instanceString, instance, playerGreaterThanMin, playerLessThanMax)
             end
         end
     end
@@ -152,13 +152,13 @@ function ClassicLFG:SetInstancesForDropDown(dropdown)
     dropdown:SetList(filteredInstances)
 end
 
-function ClassicLFG:DebugSetInstancesForDropDown(instanceString, instance, playerGreaterThanMin, playerLessThanMax)
-    if(debugMode) then
-        self:Print("Instance --> " .. instanceString)
-        self:Print("PlayerLevel(" .. tostring(playerLevel) .. ") >= InstanceMin(" .. tostring(instance.minLevel) .. ") --> " .. playerGreaterThanMin)
-        self:Print("PlayerLevel(" .. tostring(playerLevel) .. ") <= InstanceMax(" .. tostring(instance.maxLevel) .. ") --> " .. playerLessThanMax)        
-    end
-end
+-- function ClassicLFG:DebugSetInstancesForDropDown(instanceString, instance, playerGreaterThanMin, playerLessThanMax)
+--     if(debugMode) then
+--         self:Print("Instance --> " .. instanceString)
+--         self:Print("PlayerLevel(" .. tostring(playerLevel) .. ") >= InstanceMin(" .. tostring(instance.minLevel) .. ") --> " .. playerGreaterThanMin)
+--         self:Print("PlayerLevel(" .. tostring(playerLevel) .. ") <= InstanceMax(" .. tostring(instance.maxLevel) .. ") --> " .. playerLessThanMax)        
+--     end
+-- end
 
 function ClassicLFG:DisplayUI()
     self:Print("ClassicLFG UI displayed!")

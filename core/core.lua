@@ -17,6 +17,7 @@ local playerLevel = UnitLevel("player") -- grab player level
 local playerClass = UnitClass("player") -- grab player class
 local isTank = false
 local isHealer = false
+local roles = {}
 
 -- table of classes eligible to tank
 local tankClasses = {}
@@ -69,6 +70,7 @@ function ClassicLFG:OnInitialize()
     LibStub("AceConfig-3.0"):RegisterOptionsTable("ClassicLFG", options)
     self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("ClassicLFG", "ClassicLFG")
     self:RegisterChatCommand("lfg", "DisplayUI")
+    roles = self:SetRolesForDropDown()
     -- self:DebugOnInitialize()
 end
 
@@ -180,7 +182,7 @@ function ClassicLFG:DisplayUI()
 
     -- Role DropDown - Tank, Healer, Dps
     roleDropDown:SetText("Select Role")
-    roleDropDown:SetList(self:SetRolesForDropDown())
+    roleDropDown:SetList(roles)
     parentFrame:AddChild(roleDropDown)
 
     -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...

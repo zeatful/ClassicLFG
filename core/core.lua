@@ -18,12 +18,6 @@ local playerClass = UnitClass("player") -- grab player class
 local isTank = false
 local isHealer = false
 
--- table of roles
-local roles = {}
-roles[0] = "Tank"
-roles[1] = "Healer"
-roles[2] = "Dps"
-
 -- table of classes eligible to tank
 local tankClasses = {}
 tankClasses["Warrior"] = "Warrior"
@@ -106,6 +100,18 @@ function ClassicLFG:QueueForInstance()
     self:QueueForInstance()
 end
 
+function ClassicLFG:SetRolesForDropDown()
+    local roles = {}
+    roles[0] = "Dps"
+    if isTank then
+        table.insert(roles, "Tank")
+    end
+    if isHealer then
+        table.insert(roles, "Healer")
+    end
+    return roles
+end
+
 -- function ClassicLFG:DebugQueueForInstance()
 --     if(debugMode) then
 --         self:Print("Queue for instance pressed!")
@@ -174,7 +180,7 @@ function ClassicLFG:DisplayUI()
 
     -- Role DropDown - Tank, Healer, Dps
     roleDropDown:SetText("Select Role")
-    roleDropDown:SetList(roles)
+    roleDropDown:SetList(self:SetRolesForDropDown())
     parentFrame:AddChild(roleDropDown)
 
     -- Instance DropDown, IE: Scholomance, Wailing Caverns, etc...
